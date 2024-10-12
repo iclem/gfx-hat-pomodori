@@ -181,6 +181,33 @@ class ST7567:
         self.setup()
         self._command([ST7567_SETCONTRAST, value])
 
+    def set_image(self, image):
+        """Set the display buffer from a PIL Image and update the display.
+
+        :param image: PIL Image object to display
+
+        """
+        # Ensure the image is in 1-bit mode and correct size
+        image = image.convert('1').resize((WIDTH, HEIGHT))
+        pixels = image.load()
+
+        for y in range(HEIGHT):
+            for x in range(WIDTH):
+                pixel = pixels[x, y]
+                value = 1 if pixel == 1 else 0
+                if self.rotated:
+                    x_display = (WIDTH - 1) - x
+                    y_display = (HEIGHT - 1) - y
+                else:
+                    x_display = x
+                    y_display = y
+                page = y_display // 8
+                bit = y_display % 8
+                offset = (page * WIDTH) + x_display
+                if value:
+                    self.buf[offset] |= (1 << bit)
+                else:
+                    self.buf[offset] &= ~(1 << bit)
 
 if __name__ == '__main__':  # pragma: no cover
     st7567 = ST7567()

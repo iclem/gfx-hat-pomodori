@@ -31,6 +31,9 @@ def contrast(value):
     """Change GFX HAT LCD contrast."""
     st7567.contrast(value)
 
+def set_image(image):
+    """Set the display buffer from a PIL Image and update the display."""
+    st7567.set_image(image)
 
 def rotation(r=0):
     """Set the display rotation.
