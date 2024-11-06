@@ -22,7 +22,7 @@ Press Ctrl + C to exit.
 
 """)
 
-pinout = yaml.load(open("pinout.yaml").read())
+pinout = yaml.load(open("pinout.yaml").read(), Loader=yaml.SafeLoader)
 src = Image.open("upinout.png").convert("P")
 
 width, height = lcd.dimensions()
