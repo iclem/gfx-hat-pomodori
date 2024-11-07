@@ -138,7 +138,7 @@ class ST7567:
 
     def _init(self):
         self._command([
-            ST7567_BIAS_1_7,          # Bais 1/7 (0xA2 = Bias 1/9)
+            ST7567_BIAS_1_7,          # Bias 1/7 (0xA2 = Bias 1/9)
             ST7567_SEG_DIR_NORMAL,
             ST7567_SETCOMREVERSE,     # Reverse COM - vertical flip
             ST7567_DISPNORMAL,        # Inverse display (0xA6 normal)

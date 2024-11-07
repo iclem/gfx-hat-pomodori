@@ -84,6 +84,9 @@ exclude = [
 line-length = 200
 
 [tool.codespell]
+ignore-words-list = """
+    DOUT
+"""
 skip = """
 ./.tox,\
 ./.egg,\
