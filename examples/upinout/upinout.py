@@ -115,7 +115,7 @@ while running:
             name = pin_details['name'].strip()
             if len(name) > 0:
                 name += ' '
-        
+
         draw.text((4, 34), "{}#{}".format(name, current_pin + 1), 1, font)
 
         if 'scheme' in pin_details:
@@ -148,7 +148,7 @@ while running:
 
     if 'functions' in pin_details:
         scroll_y = 33 + (current_page * 10)
-        draw.rectangle(((124, scroll_y),(126, scroll_y + 10)), 1) 
+        draw.rectangle(((124, scroll_y),(126, scroll_y + 10)), 1)
 
     backlight.set_all(255, 255, 255)
 
@@ -159,7 +159,7 @@ while running:
         if pin_type == 'GPIO/SPI':
             backlight.set_all(0, 0, 255)
         if pin_type == 'GND':
-            backlight.set_all(128, 128, 128)    
+            backlight.set_all(128, 128, 128)
         if pin_type == '+5v':
             backlight.set_all(255, 0, 0)
         if pin_type == '+3v3':
