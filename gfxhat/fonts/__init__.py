@@ -1,7 +1,7 @@
 """Basic font helper module."""
 # TODO This became fonts-python and should be replaced
-import os
 import glob
+import os
 
 font_directory = os.path.abspath(os.path.dirname(__file__))
 

@@ -53,8 +53,8 @@ def show():
 
 
 if __name__ == '__main__':  # pragma: no cover
-    import time
     import colorsys
+    import time
 
     def wipe(r, g, b):  # noqa D103
         for x in range(6):

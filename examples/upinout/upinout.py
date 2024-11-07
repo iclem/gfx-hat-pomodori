@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
-import time
-import sys
 import atexit
-from gfxhat import lcd, backlight, touch, fonts
-from PIL import Image, ImageDraw, ImageFont
+import sys
+import time
+
 import yaml
+from PIL import Image, ImageDraw, ImageFont
+
+from gfxhat import backlight, fonts, lcd, touch
 
 print("""upinout.py
 

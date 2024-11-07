@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import signal
+
 from gfxhat import touch
 
 print("""touch.py

@@ -1,8 +1,9 @@
 """Library for the ST7567 128x64 SPI LCD."""
+import random
+import time
+
 import RPi.GPIO as GPIO
 import spidev
-import time
-import random
 
 SPI_SPEED_HZ = 1000000
 
