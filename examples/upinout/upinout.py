@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import atexit
-import sys
 import time
 
 import yaml
@@ -133,7 +132,8 @@ while running:
             functions = pin_details['functions']
             alt_y = 0
             for alt in ['alt0', 'alt1', 'alt2']:
-                if alt not in functions: continue
+                if alt not in functions:
+                    continue
                 name = functions[alt]
                 draw.text((4, 34 + alt_y), "{}: {}".format(alt, name), 1, font)
                 alt_y += 8
@@ -143,7 +143,8 @@ while running:
             functions = pin_details['functions']
             alt_y = 0
             for alt in ['alt3', 'alt4']:
-                if alt not in functions: continue
+                if alt not in functions:
+                    continue
                 name = functions[alt]
                 draw.text((4, 34 + alt_y), "{}: {}".format(alt, name), 1, font)
                 alt_y += 8
