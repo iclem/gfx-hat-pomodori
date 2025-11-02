@@ -15,7 +15,7 @@ keywords = [
     "Raspberry",
 ]
 dependencies = [
-    "gpiozero", "spidev", "Pillow"
+    "gpiozero", "spidev", "Pillow", "sn3218"
 ]
 urls = { GitHub = "https://github.com/pimoroni/gfx-hat" }
 readme = "README.md"
