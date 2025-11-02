@@ -7,6 +7,8 @@ from PIL import Image, ImageDraw, ImageFont
 
 from gfxhat import backlight, fonts, lcd, touch
 
+from lib import getsize
+
 print("""hello-world.py
 
 This basic example prints the text "Hello World" in the middle of the LCD
@@ -21,7 +23,7 @@ led_states = [False for _ in range(6)]
 
 width, height = lcd.dimensions()
 
-image = Image.new('P', (width, height))
+image = Image.new("P", (width, height))
 
 draw = ImageDraw.Draw(image)
 
@@ -29,15 +31,16 @@ font = ImageFont.truetype(fonts.AmaticSCBold, 38)
 
 text = "Hello World"
 
-w, h = font.getsize(text)
+w, h = getsize(font, text)
 
 x = (width - w) // 2
 y = (height - h) // 2
 
 draw.text((x, y), text, 1, font)
 
+
 def handler(ch, event):
-    if event == 'press':
+    if event == "press":
         led_states[ch] = not led_states[ch]
         touch.set_led(ch, led_states[ch])
         if led_states[ch]:
@@ -45,6 +48,7 @@ def handler(ch, event):
         else:
             backlight.set_pixel(ch, 0, 255, 0)
         backlight.show()
+
 
 for x in range(6):
     touch.set_led(x, 1)
@@ -62,7 +66,7 @@ for x in range(128):
         pixel = image.getpixel((x, y))
         lcd.set_pixel(x, y, pixel)
 
-
+lcd.contrast(32)
 lcd.show()
 
 try:
@@ -74,4 +78,3 @@ except KeyboardInterrupt:
     backlight.show()
     lcd.clear()
     lcd.show()
-
