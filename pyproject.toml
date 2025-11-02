@@ -3,7 +3,7 @@ name = "gfxhat"
 version = "0.2.0"
 description = "Python library for driving Pimoroni GFX HAT!"
 license = "MIT"
-requires-python = ">= 3.10"
+requires-python = ">= 3.10,< 3.14"
 authors = [
     { name = "Philip Howard", email = "phil@pimoroni.com" },
 ]
@@ -15,7 +15,7 @@ keywords = [
     "Raspberry",
 ]
 dependencies = [
-    "gpiozero", "spidev", "Pillow", "sn3218"
+    "gpiozero", "rpi-lgpio", "spidev", "Pillow", "sn3218", "cap1xxx"
 ]
 urls = { GitHub = "https://github.com/pimoroni/gfx-hat" }
 readme = "README.md"
@@ -61,5 +61,6 @@ dev = [
     "ruff (>=0.14.3,<0.15.0)"
 ]
 test = [
-    "pytest (>=8.4.2,<9.0.0)"
+    "pytest (>=8.4.2,<9.0.0)",
+    "pytest-cov (>=7.0.0,<8.0.0)"
 ]

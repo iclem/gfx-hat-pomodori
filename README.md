@@ -55,11 +55,25 @@ cd gfx-hat
 python3 -m venv .gfxhat
 source .gfxhat/bin/activate
 pip install 'poetry<3'
-poetry install --with dev 
+poetry install --with dev,test
 poetry build # builds the sdist and wheel
 ```
 
 In all cases you will have to enable the i2c and spi buses.
+
+A Dockerfile is available to test the code from a non-linux environment, eg. MacOS.
+
+```bash
+docker build -t pomodori-gfxhat .
+docker run -it --mount type=bind,src=.,dst=/app pomodori-gfxhat
+```
+#### Dependencies
+
+To install the dependencies needed by the package on a Raspberry Pi 5:
+
+```bash
+sudo apt update && sudo apt install swig liblgpio-dev
+```
 
 ## Licensing
 
