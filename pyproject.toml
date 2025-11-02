@@ -1,13 +1,9 @@
-[build-system]
-requires = ["hatchling", "hatch-fancy-pypi-readme", "hatch-requirements-txt"]
-build-backend = "hatchling.build"
-
 [project]
 name = "gfxhat"
-dynamic = ["version", "readme", "optional-dependencies"]
+version = "0.2.0"
 description = "Python library for driving Pimoroni GFX HAT!"
-license = {file = "LICENSE"}
-requires-python = ">= 3.7"
+license = "MIT"
+requires-python = ">= 3.10,< 3.14"
 authors = [
     { name = "Philip Howard", email = "phil@pimoroni.com" },
 ]
@@ -18,59 +14,16 @@ keywords = [
     "Pi",
     "Raspberry",
 ]
-classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: POSIX :: Linux",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3 :: Only",
-    "Topic :: Software Development",
-    "Topic :: Software Development :: Libraries",
-    "Topic :: System :: Hardware",
+dependencies = [
+    "gpiozero", "rpi-lgpio", "spidev", "Pillow", "sn3218", "cap1xxx"
 ]
-dependencies = []
+urls = { GitHub = "https://github.com/pimoroni/gfx-hat" }
+readme = "README.md"
 
-[tool.hatch.metadata.hooks.requirements_txt.optional-dependencies]
-example-depends = ["requirements-examples.txt"]
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
 
-[project.urls]
-GitHub = "https://www.github.com/pimoroni/gfxhat-python"
-Homepage = "https://www.pimoroni.com"
-
-[tool.hatch.version]
-path = "gfxhat/__init__.py"
-
-[tool.hatch.build]
-include = [
-    "gfxhat",
-    "README.md",
-    "CHANGELOG.md",
-    "LICENSE",
-    "requirements-examples.txt"
-]
-
-[tool.hatch.build.targets.sdist]
-include = [
-    "*"
-]
-exclude = [
-    ".*",
-    "dist"
-]
-
-[tool.hatch.metadata.hooks.fancy-pypi-readme]
-content-type = "text/markdown"
-fragments = [
-  { path = "README.md" },
-  { text = "\n" },
-  { path = "CHANGELOG.md" }
-]
 
 [tool.ruff]
 exclude = [
@@ -82,22 +35,6 @@ exclude = [
     'dist'
 ]
 line-length = 200
-
-[tool.codespell]
-ignore-words-list = """
-    DOUT
-"""
-skip = """
-./.tox,\
-./.egg,\
-./.git,\
-./__pycache__,\
-./build,\
-./dist.\
-"""
-
-[tool.isort]
-line_length = 200
 
 [tool.check-manifest]
 ignore = [
@@ -118,3 +55,12 @@ ignore = [
 apt_packages = []
 configtxt = []
 commands = []
+
+[dependency-groups]
+dev = [
+    "ruff (>=0.14.3,<0.15.0)"
+]
+test = [
+    "pytest (>=8.4.2,<9.0.0)",
+    "pytest-cov (>=7.0.0,<8.0.0)"
+]

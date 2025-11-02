@@ -1,19 +1,13 @@
-# noqa D100
-import mock
+from unittest import mock
 import pytest
 
 
-def test_st7567_init(GPIO):
+def test_st7567_init():
     """Test that the ST7567 initialises correctly."""
     from gfxhat import lcd
 
     lcd.st7567.setup()
-
-    GPIO.setmode.assert_called_once_with(GPIO.BCM)
-    GPIO.setup.assert_has_calls([
-        mock.call(6, GPIO.OUT),
-        mock.call(5, GPIO.OUT)
-    ], any_order=True)
+    assert lcd.st7567._is_setup is True
 
 
 def test_st7567_rotate():

@@ -2,7 +2,7 @@
 import random
 import time
 
-import RPi.GPIO as GPIO
+from gpiozero import OutputDevice
 import spidev
 
 SPI_SPEED_HZ = 1000000
@@ -96,14 +96,12 @@ class ST7567:
         self.clear()
 
     def setup(self):
-        """Set up GPIO and initialise the ST7567 device."""
+        """Set up GPIO and initialise the ST7567 device using gpiozero."""
         if self._is_setup:
             return True
 
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
-        GPIO.setup(self.pin_rst, GPIO.OUT)
-        GPIO.setup(self.pin_dc, GPIO.OUT)
+        self.rst = OutputDevice(self.pin_rst)
+        self.dc = OutputDevice(self.pin_dc)
 
         self.spi = spidev.SpiDev()
         self.spi.open(self.spi_bus, self.spi_cs)
@@ -123,17 +121,17 @@ class ST7567:
         self.buf = [0 for _ in range(128 * 64 // 8)]
 
     def _command(self, data):
-        GPIO.output(self.pin_dc, 0)
+        self.dc.off()
         self.spi.writebytes(data)
 
     def _data(self, data):
-        GPIO.output(self.pin_dc, 1)
+        self.dc.on()
         self.spi.writebytes(data)
 
     def _reset(self):
-        GPIO.output(self.pin_rst, 0)
+        self.rst.off()
         time.sleep(0.01)
-        GPIO.output(self.pin_rst, 1)
+        self.rst.on()
         time.sleep(0.1)
 
     def _init(self):

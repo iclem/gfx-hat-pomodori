@@ -8,6 +8,8 @@ from PIL import Image, ImageDraw, ImageFont
 
 from gfxhat import backlight, fonts, lcd, touch
 
+from lib import getsize
+
 print("""menu-options.py
 
 This example shows how you might store a list of menu options associated
@@ -18,48 +20,53 @@ Press Ctrl+C or select "Exit" to exit.
 """)
 
 width, height = lcd.dimensions()
+lcd.contrast(42)
 
 # A squarer pixel font
-#font = ImageFont.truetype(fonts.BitocraFull, 11)
+# font = ImageFont.truetype(fonts.BitocraFull, 11)
 
 # A slightly rounded, Ubuntu-inspired version of Bitocra
 font = ImageFont.truetype(fonts.BitbuntuFull, 10)
 
-image = Image.new('P', (width, height))
+image = Image.new("P", (width, height))
 
 draw = ImageDraw.Draw(image)
+
 
 class MenuOption:
     def __init__(self, name, action, options=()):
         self.name = name
         self.action = action
         self.options = options
-        self.size = font.getsize(name)
+        self.size = getsize(font, name)
         self.width, self.height = self.size
 
     def trigger(self):
         self.action(*self.options)
 
+
 def set_backlight(r, g, b):
     backlight.set_all(r, g, b)
     backlight.show()
 
+
 menu_options = [
-            MenuOption('Set BL Red', set_backlight, (255, 0, 0)),
-            MenuOption('Set BL Green', set_backlight, (0, 255, 0)),
-            MenuOption('Set BL Blue', set_backlight, (0, 0, 255)),
-            MenuOption('Set BL Purple', set_backlight, (255, 0, 255)),
-            MenuOption('Set BL White', set_backlight, (255, 255, 255)),
-            MenuOption('Exit', sys.exit, (0,))
-        ]
+    MenuOption("Set BL Red", set_backlight, (255, 0, 0)),
+    MenuOption("Set BL Green", set_backlight, (0, 255, 0)),
+    MenuOption("Set BL Blue", set_backlight, (0, 0, 255)),
+    MenuOption("Set BL Purple", set_backlight, (255, 0, 255)),
+    MenuOption("Set BL White", set_backlight, (255, 255, 255)),
+    MenuOption("Exit", sys.exit, (0,)),
+]
 
 current_menu_option = 1
 
 trigger_action = False
 
+
 def handler(ch, event):
     global current_menu_option, trigger_action
-    if event != 'press':
+    if event != "press":
         return
     if ch == 1:
         current_menu_option += 1
@@ -69,6 +76,7 @@ def handler(ch, event):
         trigger_action = True
     current_menu_option %= len(menu_options)
 
+
 for x in range(6):
     touch.set_led(x, 0)
     backlight.set_pixel(x, 255, 255, 255)
@@ -76,11 +84,13 @@ for x in range(6):
 
 backlight.show()
 
+
 def cleanup():
     backlight.set_all(0, 0, 0)
     backlight.show()
     lcd.clear()
     lcd.show()
+
 
 atexit.register(cleanup)
 
@@ -103,11 +113,11 @@ try:
             y = (index * 12) + (height / 2) - 4 - offset_top
             option = menu_options[index]
             if index == current_menu_option:
-                draw.rectangle(((x-2, y-1), (width, y+10)), 1)
+                draw.rectangle(((x - 2, y - 1), (width, y + 10)), 1)
             draw.text((x, y), option.name, 0 if index == current_menu_option else 1, font)
 
-        w, h = font.getsize('>')
-        draw.text((0, (height - h) / 2), '>', 1, font)
+        w, h = getsize(font, ">")
+        draw.text((0, (height - h) / 2), ">", 1, font)
 
         for x in range(width):
             for y in range(height):
@@ -119,4 +129,3 @@ try:
 
 except KeyboardInterrupt:
     cleanup()
-

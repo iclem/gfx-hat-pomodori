@@ -6,6 +6,8 @@ from PIL import Image, ImageDraw, ImageFont
 
 from gfxhat import backlight, fonts, lcd
 
+from lib import getsize
+
 print("""
 
 GFX HAT - Contrast Scanner
@@ -34,7 +36,7 @@ def scan_contrast():
 
         message = "Contrast: {:02d}".format(c)
 
-        w, h = font.getsize(message)
+        w, h = getsize(font, message)
         left, top = (width - w) / 2, (height - h) / 2
 
         draw.text((left, top), message, 1, font=font)

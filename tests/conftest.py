@@ -1,19 +1,13 @@
-# noqa D100
-import sys
 
-import mock
+import os
+import sys
+def pytest_configure():
+    os.environ['GPIOZERO_PIN_FACTORY'] = 'mock'
+
+from unittest import mock
 import pytest
 
 
-@pytest.fixture(scope='session', autouse=True)
-def GPIO():
-    """Mock RPi.GPIO module."""
-    GPIO = mock.MagicMock()
-    # Fudge for Python < 37 (possibly earlier)
-    sys.modules['RPi'] = mock.MagicMock()
-    sys.modules['RPi'].GPIO = GPIO
-    sys.modules['RPi.GPIO'] = GPIO
-    return GPIO
 
 
 @pytest.fixture(scope='session', autouse=True)
