@@ -43,12 +43,21 @@ sudo pip2 install gfxhat
 
 ### Development:
 
-If you want to contribute, or like living on the edge of your seat by having the latest code, you should clone this repository, `cd` to the library directory, and run:
+If you want to contribute, or like living on the edge of your seat by having the latest code, you should:
+- clone this repository
+- `cd` to the library directory
+- create a virtual environment (recommended)
+- install Poetry
 
 ```bash
-sudo python3 setup.py install
+git clone https://github.com/pimoroni/gfx-hat.git
+cd gfx-hat
+python3 -m venv .gfxhat
+source .gfxhat/bin/activate
+pip install 'poetry<3'
+poetry install --with dev 
+poetry build # builds the sdist and wheel
 ```
-(or `sudo python setup.py install` whichever your primary Python environment may be)
 
 In all cases you will have to enable the i2c and spi buses.
 
